@@ -11,6 +11,7 @@ rockchip_setup_interfaces()
 	local board="$1"
 
 	case "$board" in
+	armsom,sige1-v1|\
 	armsom,sige7-v1|\
 	easepi,ars4|\
 	friendlyelec,nanopi-r5c|\
@@ -26,7 +27,7 @@ rockchip_setup_interfaces()
 		ucidef_set_interfaces_lan_wan 'eth1' 'eth0'
 		;;
 	hinlink,opc-h69k|\
-	friendlyelec,nanopi-r5s)
+	friendlyelec,nanopi-r5s|friendlyelec,nanopi-r5s-c1)
 		ucidef_set_interfaces_lan_wan "eth1 eth2" "eth0"
 		;;
 	lyt,t68m|\
@@ -40,12 +41,15 @@ rockchip_setup_interfaces()
 	hinlink,h88k-v3)
 		ucidef_set_interfaces_lan_wan 'eth1 eth2 eth3 eth4' 'eth0'
 		;;
+	radxa,e20c|\
+	mangopi,m28k|\
 	hlink,h28k)
 		ucidef_set_interfaces_lan_wan 'eth0' 'eth1'
 		;;
 	inspur,ihec301)
+		ucidef_set_interface_wan "eth0"
 		ucidef_add_switch "switch0" \
-			"0:lan" "1:lan" "2:lan" "3:lan" "4:wan" "7t@eth0"
+			"0:lan" "1:lan" "2:lan" "3:lan" "7t@eth1"
 		;;
 	*)
 		ucidef_set_interface_lan 'eth0' 'dhcp'
@@ -80,6 +84,7 @@ rockchip_setup_macs()
 	easepi,ars4|\
 	firefly,rk3568-roc-pc|\
 	friendlyelec,nanopi-r5s|\
+	friendlyelec,nanopi-r5s-c1|\
 	friendlyelec,nanopi-r5c|\
 	friendlyelec,nanopi-r6s|\
 	friendlyelec,nanopi-r6c|\
@@ -90,13 +95,16 @@ rockchip_setup_macs()
 	hinlink,opc-h68k|\
 	hinlink,opc-h66k|\
 	hinlink,hnas|\
+	inspur,ihec301|\
 	jsy,h1|\
 	yyy,h1|\
 	idiskk,h1|\
 	jp,tvbox|\
 	panther,x2|\
 	lyt,t68m|\
+	mangopi,m28k|\
 	nlnet,xgp|\
+	radxa,e20c|\
 	fastrhino,r66s|\
 	fastrhino,r68s)
 		wan_mac=$(generate_mac_from_mmc)
